@@ -51,10 +51,6 @@ def decision_control(player_decision):
 def check_for_ace(player: Player | CPU, game_control: Game):
     values = {'O': 1, 'E': 11}
 
-    if player.getPoints + 10 == 21:
-        game_control.turn, game_control.state = 'None', 'BlackJack'
-        ace_value = 'E'
-
     match player._player_type.upper():
         case 'HUMAN':
             for cards in player.hand:
@@ -152,7 +148,7 @@ def main():
                     player.show_player_hand()
                     check_for_ace(player, MainGame)
 
-                    d = 1
+                    d = None
                     if player.getPoints < 21:
                         d = decision_control(input('[0] Hit  [1] Stand: '))
                         wait_for_next_line(1.5)
@@ -166,11 +162,13 @@ def main():
                         case 1:
                             console_commands('cls')
                             MainGame.turn, MainGame.state = 'Dealer', 'Finished'
+                        case _:
+                            pass
                     if player.getPoints == 21:
                         MainGame.state, MainGame.turn = 'BlackJack', 'None'
                         check_game_state(
                             MainGame.state, player_bet, player, dealer)
-                        
+
                     if player.getPoints > 21:
                         MainGame.state, MainGame.turn = 'Bust', 'None'
                         check_game_state(
