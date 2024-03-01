@@ -122,6 +122,7 @@ def main():
     # Main Game
     MainGame.active, MainGame.turn, MainGame.state = True, 'Player', 'Running'
 
+    console_commands('cls')
     player.show_player_hand()
     wait_for_next_line(1.5)
     dealer.show_player_hand()
